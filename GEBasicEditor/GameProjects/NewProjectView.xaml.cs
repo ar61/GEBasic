@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,32 @@ namespace GEBasicEditor.GameProjects
         public NewProjectView()
         {
             InitializeComponent();
+        }
+
+        private void OnClick_Button_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = DataContext as NewProject;
+            var projectTemplate = templateListBox.SelectedItem as ProjectTemplate;
+            string projectPath;
+            if (vm != null && projectTemplate != null)
+            {
+                projectPath = vm.CreateProject(projectTemplate);
+            } 
+            else
+            {
+                Debug.WriteLine("NewProjectView.xaml.cs.OnClick_Button_Click: Invalid Template, or invalid Data Context");
+                return;
+            }
+            bool dialogResult = false;
+            var win = Window.GetWindow(this);
+            if(!string.IsNullOrEmpty(projectPath) )
+            {
+                dialogResult = true;
+                var project = OpenProject.Open(new ProjectData() { ProjectName = vm.ProjectName, ProjectPath = projectPath });
+                win.DataContext = project;
+            }
+            win.DialogResult = dialogResult;
+            win.Close();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using GEBasicEditor.GameProjects;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,17 +28,25 @@ namespace GEBasicEditor
         {
             Loaded -= OnMainWindowLoaded;
             OptionProjectBrowserDialog();
+            Closing += OnMainWindowClosing;
+        }
+
+        private void OnMainWindowClosing(object? sender, CancelEventArgs e)
+        {
+            Closing -= OnMainWindowClosing;
+            Project.Current?.Unload();
         }
 
         private void OptionProjectBrowserDialog()
         {
             var projectBowser = new ProjectBrowserDialog();
-            if(projectBowser.ShowDialog() == false)
+            if(projectBowser.ShowDialog() == false || projectBowser.DataContext == null)
             {
                 Application.Current.Shutdown();
             } else
             {
-
+                Project.Current?.Unload();
+                DataContext = projectBowser.DataContext;
             }
         }
     }
