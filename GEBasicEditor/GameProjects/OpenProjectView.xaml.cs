@@ -24,6 +24,13 @@ namespace GEBasicEditor.GameProjects
         public OpenProjectView()
         {
             InitializeComponent();
+
+            Loaded += (s, e) =>
+            {
+                var item = projectsListBox.ItemContainerGenerator
+                            .ContainerFromIndex(projectsListBox.SelectedIndex) as ListBoxItem;
+                item?.Focus();
+            };
         }
 
         private void OnOpen_Button_Click(object sender, RoutedEventArgs e)
@@ -39,7 +46,7 @@ namespace GEBasicEditor.GameProjects
         private void OpenSelectedProject()
         {
             var projectData = projectsListBox.SelectedItem as ProjectData;
-            Project project;
+            Project? project;
             if (projectData != null)
             {
                 project = OpenProject.Open(projectData);
