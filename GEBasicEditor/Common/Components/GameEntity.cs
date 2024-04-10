@@ -71,6 +71,15 @@ namespace GEBasicEditor.Components
 				Project.UndoRedo.Add(new UndoRedoAction(nameof(Name), this, oldName, x, $"Entity renamed from {oldName} to {x}"));
 			}, x => x != Name
 			);
+
+			EnableCommand = new RelayCommand<bool>(x =>
+			{
+				var oldVal = _isEnabled;
+				IsEnabled = x;
+
+				Project.UndoRedo.Add(new UndoRedoAction(nameof(IsEnabled), this, oldVal, x, x ? $"Enable: {Name}" : $"Disabled: {Name}"));
+			}
+			);
 		}
 		public GameEntity(Scene scene)
 		{
