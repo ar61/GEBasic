@@ -17,10 +17,8 @@ namespace GEBasicEditor.Utilities
             try
             {
                 var serializer = new DataContractSerializer(typeof(T));
-                using (FileStream fs = File.Create(path))
-                {
-                    serializer.WriteObject(fs, instance);
-                }
+                using FileStream fs = File.Create(path);
+                serializer.WriteObject(fs, instance);
             }
             catch(Exception ex)
             { 
@@ -34,16 +32,14 @@ namespace GEBasicEditor.Utilities
             try
             {
                 var serializer = new DataContractSerializer(typeof(T));
-                using (FileStream fs = new FileStream(path, FileMode.Open))
-                {
-                    return (T?)serializer.ReadObject(fs);
-                }
+                using FileStream fs = new FileStream(path, FileMode.Open);
+                return (T?)serializer.ReadObject(fs);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
                 // TODO: log error
-                return default(T);
+                return default;
             }
         }
     }
