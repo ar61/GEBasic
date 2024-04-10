@@ -41,6 +41,7 @@ namespace GEBasicEditor.Utilities
 
     public class UndoRedo
     {
+        private bool _enableAdd = true;
         private readonly ObservableCollection<IUndoRedo> _undoList = [];
         private readonly ObservableCollection<IUndoRedo> _redoList = [];
         public ReadOnlyObservableCollection<IUndoRedo> UndoList { get; private set; }
@@ -54,8 +55,11 @@ namespace GEBasicEditor.Utilities
 
         public void Add(IUndoRedo cmd)
         {
-            _undoList.Add(cmd);
-            _redoList.Clear();
+            if (_enableAdd)
+            {
+                _undoList.Add(cmd);
+                _redoList.Clear();
+            }
         }
 
         public void Undo()
@@ -64,7 +68,9 @@ namespace GEBasicEditor.Utilities
             {
                 var cmd = _undoList.Last();
                 _undoList.RemoveAt(_undoList.Count - 1);
+                _enableAdd = false;
                 cmd.Undo();
+                _enableAdd = true;
                 _redoList.Insert(0, cmd);
             }
         }
@@ -75,7 +81,9 @@ namespace GEBasicEditor.Utilities
             {
                 var cmd = _redoList.First();
                 _redoList.RemoveAt(0);
+                _enableAdd = false;
                 cmd.Redo();
+                _enableAdd = true;
                 _undoList.Add(cmd);
             }
         }

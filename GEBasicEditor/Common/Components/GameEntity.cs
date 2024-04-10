@@ -15,6 +15,19 @@ namespace GEBasicEditor.Components
     public class GameEntity : ViewModelBase
     {
 
+		private bool _isEnabled;
+		public bool IsEnabled
+		{
+			get => _isEnabled;
+			set
+			{
+				if (_isEnabled != value)
+				{
+					_isEnabled = value;
+					OnPropertyChanged(nameof(IsEnabled));
+				}
+			}
+		}
 		private string _name;
 		[DataMember]
 		public string Name
@@ -49,7 +62,12 @@ namespace GEBasicEditor.Components
 		{
 			Debug.Assert(scene != null);
 			ParentScene = scene;
+			IsEnabled = false;
+			Name = "Default Game Entity";
 			_components.Add(new Transform(this));
+			OnDeserialized(new StreamingContext());
+			Debug.Assert(Components != null);
+			Debug.Assert(_name != null);
 		}
     }
 }

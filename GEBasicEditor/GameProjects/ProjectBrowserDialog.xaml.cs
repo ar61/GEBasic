@@ -22,6 +22,18 @@ namespace GEBasicEditor.GameProjects
         public ProjectBrowserDialog()
         {
             InitializeComponent();
+            Loaded += OnProjectBrowserDialogLoaded;
+        }
+
+        private void OnProjectBrowserDialogLoaded(object sender, RoutedEventArgs e)
+        {
+            Loaded -= OnProjectBrowserDialogLoaded;
+            if(!OpenProject.Projects.Any())
+            {
+                openProjectButton.IsEnabled = false;
+                openProjectView.Visibility = Visibility.Hidden;
+                openToggleButton_Click(createProjectButton, new RoutedEventArgs());
+            }
         }
 
         private void openToggleButton_Click(object sender, RoutedEventArgs e)

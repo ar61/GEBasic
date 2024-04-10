@@ -80,10 +80,10 @@ namespace GEBasicEditor.GameProjects
             AddGameEntityCommand = new RelayCommand<GameEntity>(x =>
             {
                 AddGameEntity(x);
-                var gameEntityIndex = _gameEntities.Count - 1;
+                var gameEntityIndex = _gameEntities!.Count - 1;
                 Project.UndoRedo.Add(new UndoRedoAction(
                     () => RemoveGameEntity(x),
-                    () => _gameEntities.Insert(gameEntityIndex, x),
+                    () => _gameEntities!.Insert(gameEntityIndex, x),
                     $"Add {x.Name} to {Name}"));
             });
 
@@ -108,6 +108,7 @@ namespace GEBasicEditor.GameProjects
 			Debug.Assert(_name != null);
             Debug.Assert(AddGameEntityCommand != null);
             Debug.Assert(RemoveGameEntityCommand != null);
+            Debug.Assert(GameEntities != null);
         }
     }
 }
