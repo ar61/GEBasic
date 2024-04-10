@@ -1,4 +1,5 @@
 ﻿using GEBasicEditor.GameProjects;
+using GEBasicEditor.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace GEBasicEditor.Components
 {
@@ -49,6 +51,9 @@ namespace GEBasicEditor.Components
 		private readonly ObservableCollection<Component> _components = [];
 		public ReadOnlyObservableCollection<Component> Components { get; private set; }
 
+		public ICommand RenameCommand { get; private set; }
+		public ICommand EnableCommand { get; private set; }
+
 		[OnDeserialized]
 		void OnDeserialized(StreamingContext context)
 		{
@@ -57,6 +62,15 @@ namespace GEBasicEditor.Components
 				Components = new ReadOnlyObservableCollection<Component>(_components);
 				OnPropertyChanged(nameof(Components));
 			}
+
+			RenameCommand = new RelayCommand<string>(x =>
+			{
+				var oldName = _name;
+				Name = x;
+
+				Project.UndoRedo.Add(new UndoRedoAction(nameof(Name), this, oldName, x, $"Entity renamed from {oldName} to {x}"));
+			}, x => x != Name
+			);
 		}
 		public GameEntity(Scene scene)
 		{
@@ -68,6 +82,8 @@ namespace GEBasicEditor.Components
 			OnDeserialized(new StreamingContext());
 			Debug.Assert(Components != null);
 			Debug.Assert(_name != null);
+			Debug.Assert(RenameCommand != null);
+			//Debug.Assert(EnableCommand != null);
 		}
     }
 }
