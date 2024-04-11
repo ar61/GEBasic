@@ -167,7 +167,7 @@ namespace GEBasicEditor.GameProjects
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                // TODO: log error
+                Logger.Log(MessageType.Error, $"Unable create project at {ProjectName}");
                 return string.Empty;
             }
         }
@@ -215,7 +215,7 @@ namespace GEBasicEditor.GameProjects
             catch(Exception ex) 
             {
                 Debug.WriteLine(ex.Message);
-                // TODO: log error
+                Logger.Log(MessageType.Error, $"Failed to read project templates");
             }
         }
     }

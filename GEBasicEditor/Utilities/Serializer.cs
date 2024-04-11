@@ -23,7 +23,8 @@ namespace GEBasicEditor.Utilities
             catch(Exception ex)
             { 
                 Debug.WriteLine(ex.Message);
-                // TODO: log error
+                Logger.Log(MessageType.Error, $"Unable to Serialize {instance} to {path}");
+                throw;
             }
         }
 
@@ -38,8 +39,8 @@ namespace GEBasicEditor.Utilities
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                // TODO: log error
-                return default;
+                Logger.Log(MessageType.Error, $"Unable to Deserialize {path}");
+                throw;
             }
         }
     }

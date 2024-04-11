@@ -49,6 +49,7 @@ namespace GEBasicEditor.GameProjects
                 if (allProjects == null)
                 {
                     Debug.WriteLine($"No Projects found at {_projectDataPath}");
+                    Logger.Log(MessageType.Error, $"Not Projects found at  {_projectDataPath}");
                     return;
                 }
                 var projects = allProjects.Projects.OrderByDescending(x => x.Date);
@@ -104,6 +105,7 @@ namespace GEBasicEditor.GameProjects
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
+                Logger.Log(MessageType.Error, $"Unable to read project data at {_applicationDataPath}");
             }
             Debug.Assert(_projectDataPath != null);
             Debug.Assert(Projects != null);
