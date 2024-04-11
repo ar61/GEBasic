@@ -27,7 +27,7 @@ namespace GEBasicEditor.Utilities
         public string FileName { get; }
         public string Caller { get; }
         public int Line { get; }
-        public string MetaData => $"{FileName}: {Caller} ({Line})";
+        public string Metadata => $"{FileName}: {Caller} ({Line})";
 
         public LogMessage(MessageType type, string msg, string file, string caller, int line)
         {
