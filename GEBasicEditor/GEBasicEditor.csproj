@@ -9,6 +9,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <BaseOutputPath>..\x64\</BaseOutputPath>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	<UseWindowsForms>False</UseWindowsForms>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -18,5 +19,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <WarningLevel>9999</WarningLevel>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="obj_backup\**" />
+    <EmbeddedResource Remove="obj_backup\**" />
+    <None Remove="obj_backup\**" />
+    <Page Remove="obj_backup\**" />
+  </ItemGroup>
 
 </Project>

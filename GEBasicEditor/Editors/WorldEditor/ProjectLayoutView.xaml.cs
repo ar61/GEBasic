@@ -1,5 +1,6 @@
 ﻿using GEBasicEditor.Components;
 using GEBasicEditor.GameProjects;
+using GEBasicEditor.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -37,8 +38,29 @@ namespace GEBasicEditor.Editors
 
         private void OnGameEntities_ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var entity = (sender as ListBox).SelectedItems[0];
-            GameEntityView.Instance.DataContext = entity;
+            GameEntityView.Instance!.DataContext = null;
+            if(e.AddedItems.Count > 0)
+            {
+                GameEntityView.Instance.DataContext = (sender as ListBox)?.SelectedItems[0];
+            }
+
+            var listBox = sender as ListBox;
+            var newSelection = listBox!.SelectedItems.Cast<GameEntity>().ToList();
+            var prevSelection = newSelection.Except(e.AddedItems.Cast<GameEntity>()).Concat(e.RemovedItems.Cast<GameEntity>()).ToList();
+
+            Project.UndoRedo.Add(new UndoRedoAction(
+                () => // undo
+                {
+                    listBox.UnselectAll();
+                    prevSelection.ForEach(item => (listBox.ItemContainerGenerator.ContainerFromItem(item) as ListBoxItem)!.IsSelected = true );
+                },
+                () => // redo
+                {
+                    listBox.UnselectAll();
+                    newSelection.ForEach(item => (listBox.ItemContainerGenerator.ContainerFromItem(item) as ListBoxItem)!.IsSelected = true );
+                },
+                "Selection Changed"
+                ));
         }
     }
 }
