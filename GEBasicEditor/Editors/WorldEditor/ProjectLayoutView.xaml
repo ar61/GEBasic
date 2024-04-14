@@ -41,6 +41,11 @@
                             </Expander.Header>
                             <ListBox ItemsSource="{Binding GameEntities}" IsEnabled="{Binding IsActive}" SelectionMode="Extended"
                                      SelectionChanged="OnGameEntities_ListBox_SelectionChanged">
+                                <ListBox.Style>
+                                    <Style>
+                                        <Setter Property="Selector.Background" Value="LightYellow"/>
+                                    </Style>
+                                </ListBox.Style>
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
