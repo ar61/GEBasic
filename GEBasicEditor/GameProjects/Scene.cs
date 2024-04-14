@@ -13,7 +13,7 @@ using System.Windows.Input;
 namespace GEBasicEditor.GameProjects
 {
 	[DataContract]
-    public class Scene : ViewModelBase
+    class Scene : ViewModelBase
     {
 
 		private string _name;
