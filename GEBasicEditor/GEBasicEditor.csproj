@@ -10,6 +10,8 @@
     <BaseOutputPath>..\x64\</BaseOutputPath>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	<UseWindowsForms>False</UseWindowsForms>
+	<Copyright>Copyright (c) ${Company}. All rights reserved.</Copyright>
+	<Company>$(Authors)</Company>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -1,3 +1,5 @@
+// Copyright (c) Abhinav Rathod. All rights reserved.
+
 using System.Windows;
 
 [assembly: ThemeInfo(

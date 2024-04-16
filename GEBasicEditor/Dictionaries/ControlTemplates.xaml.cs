@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿// Copyright (c) Abhinav Rathod. All rights reserved.
+
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 

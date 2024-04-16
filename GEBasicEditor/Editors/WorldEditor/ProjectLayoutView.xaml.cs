@@ -1,4 +1,6 @@
-﻿using GEBasicEditor.Components;
+﻿// Copyright (c) Abhinav Rathod. All rights reserved.
+
+using GEBasicEditor.Components;
 using GEBasicEditor.GameProjects;
 using GEBasicEditor.Utilities;
 using System;
