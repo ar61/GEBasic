@@ -1,4 +1,6 @@
-﻿using GEBasicEditor.Utilities;
+﻿// Copyright (c) Abhinav Rathod. All rights reserved.
+
+using GEBasicEditor.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
