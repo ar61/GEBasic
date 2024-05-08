@@ -1,5 +1,6 @@
 
 // Copyright (c) Abhinav Rathod. All rights reserved.
+// Distributed Under the MIT License. See the LICENSE file in the project root for more information.
 
 #pragma once
 #include "CommonHeaders.h"
@@ -39,4 +40,25 @@ namespace gebasic::id {
 		assert(generation < 255);
 		return index(id) | (generation << index_bits); // 1001 | 2000 => 2001
 	}
+
+#if _DEBUG
+	namespace internal {
+		struct id_base {
+			constexpr explicit id_base(id_type id): m_id(id) {}
+			constexpr operator id_type() const { return m_id; }
+		private:
+			id_type m_id;
+		};
+	}
+
+#define DEFINE_TYPED_ID(name)								\
+		struct name final : id::internal::id_base			\
+		{													\
+			constexpr explicit name(id::id_type id)			\
+						: id_base{ id } {}					\
+			constexpr name() : id_base{ id::id_mask } {}	\
+		};
+#else
+#define DEFINE_TYPED_ID(name) using name = id::id_type;
+#endif
 }
